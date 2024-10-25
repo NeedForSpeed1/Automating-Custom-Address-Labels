@@ -54,12 +54,12 @@ def create_address_label_overlay(excel_path, template_pdf_path, output_pdf_path)
         c.save()
         packet.seek(0)
 
-        # Merge the overlay with the existing template
+        # Merge the overlay with the corresponding template page
         overlay_reader = PdfReader(packet)
         overlay_page = overlay_reader.pages[0]
 
         # Get the corresponding template page
-        template_page = template_reader.pages[index % len(template_reader.pages)]
+        template_page = template_reader.pages[min(index, len(template_reader.pages) - 1)]
         template_page.merge_page(overlay_page)
 
         # Add the merged page to the output PDF
